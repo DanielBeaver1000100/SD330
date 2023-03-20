@@ -1,0 +1,149 @@
+<style>
+    body{background-color: darkgoldenrod;}
+    .border{border:   4px solid black;padding: 1em;margin: 5% 0;}
+    .float{float: left;width:30%;border: 4px solid black;padding: 1em;margin:0;}
+    .floatfull{float: left;width:62.5%;border: 4px solid black;padding: 1em;margin:0;}
+</style>
+<body onload="OnLoad()">
+<div id="d1" class="float">
+    <img src="https://images.philips.com/is/image/PhilipsConsumer/42PFL5432D_37-IMS-en_US?$jpglarge$&wid=960"
+    id="TVPic" width=500px heigth=500px> 
+</div>
+
+<div id="d2" class="float">
+    <img src="https://images-na.ssl-images-amazon.com/images/I/717wM6zEXIL._SL1500_.jpg"
+    id="Doors" width=482px heigth=482px> 
+</div>
+
+<div onload="StartClock()" id="d3" class="float">
+    <p id="timePar" style="font-size: 5em;font-family: 'Courier New', Courier, monospace;text-align: center;" >00:00:00</p>
+</div>
+<br style="clear:left;">
+
+<div id="d4" class="floatfull" >
+<input type="button" onclick="OnOFFSwitch()" id="OF" value="Fridge-OFF" style="background-color: red;">
+<input type="button" onclick="OpenClose()" id="Open" value="Doors-Closed" >
+<input type="button" onclick="TVSwitch()" id="TV" value="TV-OFF" style="background-color: red;">
+<input type="button" onclick="Temp()" id="tem" value="Temp" >
+<input type="button" onclick="Searchbox()" id="Search" value="Search" >
+<input type="button" onclick="Clock()" id="time" value="hi" >
+
+</div>
+<br style="clear:left;">
+</body>
+<script>
+    function StartClock(){
+        setInterval(doClockTick,1000);
+    }
+
+    function doClockTick(){
+        var currentdate=new Date();
+        var hours= currentdate.getHours();
+        var min= currentdate.getMinutes();
+        var sec=currentdate.getSeconds();
+        var timeString= hours+":"+min+":"+sec;
+
+        var outputElement=document.getElementById("timePar");
+        outputElement.textContent=timeString;
+    }
+
+    function OpenClose(){
+        var pic=document.getElementById("Doors")
+        but=document.getElementById("Open")
+        if(but.value=="Doors-Closed"){
+            but.value="Doors-Open";
+            pic.src="http://1.bp.blogspot.com/-Sqgb8p2zhnQ/UDbp0DCZUjI/AAAAAAAAAFw/FfSlvNV2fIg/s1600/QQ%E6%88%AA%E5%9B%BE20120824103545.png"
+            pic.style.height='500';
+            pic.style.width='500';
+        }
+        else{
+            but.value="Doors-Closed";
+            pic.src="https://images-na.ssl-images-amazon.com/images/I/717wM6zEXIL._SL1500_.jpg"
+            pic.style.height='500';
+            pic.style.width='500';
+        }
+    }
+
+    function OnLoad(){
+        document.getElementById("TV").style.visibility="hidden";
+        document.getElementById("tem").style.visibility="hidden";
+        document.getElementById("Open").style.visibility="hidden";
+        document.getElementById("Search").style.visibility="hidden";
+        document.getElementById("time").style.visibility="hidden";
+        StartClock();
+    }
+
+   function OnOFFSwitch(){
+        but=document.getElementById("OF")
+        if(but.value=="Fridge-OFF"){
+            but.value="Fridge-ON";
+            document.getElementById('OF').style.backgroundColor="green";
+            document.getElementById("TV").style.visibility="visible";
+            document.getElementById("Open").style.visibility="visible";
+        }
+        else{
+            but.value="Fridge-OFF";
+            document.getElementById('OF').style.backgroundColor="red";
+            document.getElementById("TV").style.visibility="hidden";
+            document.getElementById("Open").style.visibility="hidden";
+            document.getElementById("Search").style.visibility="hidden";
+
+            but=document.getElementById("TV")
+            if(but.value=="TV-ON"){
+                TVSwitch()}
+            
+            but=document.getElementById("Open")
+            if(but.value=="Doors-Open"){
+                OpenClose()}
+            
+            }
+        }
+
+    function TVSwitch(){
+        but=document.getElementById("TV")
+        var pic=document.getElementById('TVPic')
+        if(but.value=="TV-OFF"){
+            but.value="TV-ON";
+            document.getElementById('TV').style.backgroundColor="green";
+            pic.src="https://tse4.mm.bing.net/th?id=OIP.jARQm7h7UnFVd2et06JADQHaFI&pid=Api&P=0"
+            pic.style.height='500px';
+            pic.style.width='500px';
+
+            document.getElementById("tem").style.visibility="visible";
+            document.getElementById("Search").style.visibility="visible";
+        }
+        else{
+            but.value="TV-OFF";
+            document.getElementById('TV').style.backgroundColor="red";
+            pic.src="https://images.philips.com/is/image/PhilipsConsumer/42PFL5432D_37-IMS-en_US?$jpglarge$&wid=960";
+            pic.style.height='500px';
+            pic.style.width='500px';
+
+            document.getElementById("tem").style.visibility="hidden";
+            document.getElementById("Search").style.visibility="hidden";
+            
+        }
+
+    }
+
+    function Searchbox(){
+        var pic=document.getElementById('TVPic')
+        pic.src="https://1.bp.blogspot.com/-9P7EfMprwhg/YQQIx-e1rpI/AAAAAAAAKHg/Q8SNgGM9SGYZKG55XyUaG3zLjbpvClJKACLcBGAsYHQ/s1600/GoogleMeetPWAInAppLauncherScreen.png"
+        pic.style.height='500px';
+        pic.style.width='500px';
+    }
+
+    function Temp(){
+        var pic=document.getElementById('TVPic')
+        pic.src="https://cdn3.vectorstock.com/i/1000x1000/49/77/cold-warm-thermometer-temperature-weather-vector-23814977.jpg"
+        pic.style.height='500px';
+        pic.style.width='500px';
+    }
+</script>
+
+<footer>
+    <hr>
+    <small> &copy; D. Beaver, March 1 ,2023  </small>
+    </footer> 
+  </body>
+  </html>
