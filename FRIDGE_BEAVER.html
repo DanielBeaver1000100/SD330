@@ -1,8 +1,10 @@
 <style>
-    body{background-color: darkgoldenrod;}
+    body{background-color: rgb(211, 209, 206);}
     .border{border:   4px solid black;padding: 1em;margin: 5% 0;}
     .float{float: left;width:30%;border: 4px solid black;padding: 1em;margin:0;}
-    .floatfull{float: left;width:62.5%;border: 4px solid black;padding: 1em;margin:0;}
+    .floatfull{float: left;width:62%;border: 4px solid black;padding: 1em;margin:0;}
+    .floatwe{float: left;width:35%;height: 40%;border: 4px solid black;padding: 1em;margin:0;}
+    .floatte{float: left;width:25%;height: 40%;border: 4px solid black;padding: 1em;margin:0;}
 </style>
 <body onload="OnLoad()">
 <div id="d1" class="float">
@@ -18,27 +20,168 @@
 <div onload="StartClock()" id="d3" class="float">
     <p id="timePar" style="font-size: 5em;font-family: 'Courier New', Courier, monospace;text-align: center;" >00:00:00</p>
 </div>
-<br style="clear:left;">
+
+<div id="d7" class="float">
+    <p >Enter time (in minutes):</p>
+    <input type="number" id="time-input" min="1" value="5">
+    <button onclick="startTimer()">Start</button> 
+    <p id="DisTime" style="font-size: 20px;"></p>
+</div>
+
+<div id="d8" class="float">
+    <label for="string-input">Enter an item:</label>
+	<input type="text" id="string-input">
+    <button onclick="addString()">Add to List</button>
+    <ul id="string-list">
+    <li>Lucky Charms</li>
+    <li>Bread</li>
+    <li>Pasta</li>
+    <li>Oils</li>
+    <li>Milk</li>
+</ul>
+</div>
+
+
 
 <div id="d4" class="floatfull" >
-<input type="button" onclick="OnOFFSwitch()" id="OF" value="Fridge-OFF" style="background-color: red;">
-<input type="button" onclick="OpenClose()" id="Open" value="Doors-Closed" >
-<input type="button" onclick="TVSwitch()" id="TV" value="TV-OFF" style="background-color: red;">
-<input type="button" onclick="Temp()" id="tem" value="Temp" >
-<input type="button" onclick="Searchbox()" id="Search" value="Search" >
-<input type="button" onclick="Clock()" id="time" value="hi" >
-
-</div>
+    <input type="button" onclick="OnOFFSwitch()" id="OF" value="Fridge-OFF" style="background-color: red;">
+    <input type="button" onclick="OpenClose()" id="Open" value="Doors-Closed" >
+    <input type="button" onclick="TVSwitch()" id="TV" value="TV-OFF" style="background-color: red;">
+    <input type="button" onclick="Searchbox()" id="Search" value="Search" >
+    <input type="button" onclick="Clock()" id="time" value="12" >
+    <p id="music"><audio autoplay controls loop>
+        <source src="Portal.mp3" type="audio/mpeg">
+        </audio>
+    </p>
+    
+    </div>
 <br style="clear:left;">
+
+
+<div id="d5" class="floatwe" style="background-image: url(http://d2.alternativeto.net/dist/s/the-weather-channel_849713_full.png?format=jpg&width=1600&height=1600&mode=min&upscale=false);"> 
+</div>
+<div id="d6" class="floatte">
+    <p style=" text-align: Center; font-size: 50px;">Fridge Temp</p>
+    <p style=" text-align: center; font-size: 50px;"><input type="button"onclick="change(-1)" id="D"value="<">|| <span id="tnum">0</span> <span id="Tscale">F</span>º  ||<input type="button"onclick="change(1)"id="I"value=">"></p>
+    <p style=" text-align: center;"><input type="button" onclick="toggleTemp()" value=" Toggle C/F"> </p>
 </body>
+
+<br style="clear:left;">
+
 <script>
+    function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    async function startTimer(){
+        var timeIn=document.getElementById("time-input").value
+        var Timerhour=Math.floor(timeIn/60)
+        var Timermin=timeIn-(Timerhour*60)
+        var Timersec=0
+        document.getElementById("DisTime").innerHTML=Timerhour.toString()+":"+Timermin.toString()+":"+Timersec.toString();
+        while(Timerhour!=0||Timermin!=0||Timersec!=0){
+            if(Timermin==0&&Timerhour>=1){
+                Timerhour=Timerhour-1;
+                Timermin=60;
+                 }
+            if(Timersec==0&&Timermin>=1){
+                Timermin=Timermin-1;
+                Timersec=60
+            }
+            else{
+                Timersec-=1
+                document.getElementById("DisTime").innerHTML=Timerhour.toString()+":"+Timermin.toString()+":"+Timersec.toString();
+            }
+            await sleep(1000); 
+    }
+    var audo=new Audio('Taco.mp3');
+    audo.play()
+}
+
+
+function addString() {
+			var stringInput = document.getElementById("string-input");
+			var string = stringInput.value;
+            if(stringInput.value == ""){
+                alert("Nothing was added")
+            }
+            else{
+			var li = document.createElement("li");
+			li.innerText = string;
+
+			var stringList = document.getElementById("string-list");
+			stringList.appendChild(li);
+
+			stringInput.value = "";
+            }
+		}
+
+
+    var count;
+    let isF=true;
+    function toggleTemp(){
+        isF = !isF;
+        updateCountDisplay()
+        }
+    
+
+    function setRandomCount() { 
+    count = Math.floor(Math.random() * 46) - 5;
+    updateCountDisplay();
+    }
+
+    function updateCountDisplay() {
+        if(isF){
+        document.getElementById("tnum").innerHTML = count;
+        document.getElementById("Tscale").innerHTML = "F";
+        }
+        else{
+            var Cel=Math.round((count-32)*(5/9));
+            document.getElementById("tnum").innerHTML = Cel;
+        document.getElementById("Tscale").innerHTML = "C";
+
+        }
+    }
+
+
+    function change(am){
+        var hold=count
+        count=count+am;
+        if(count>45 || count<-5){
+            alert("Out Temp Range");
+            count=hold
+            updateCountDisplay();
+    }
+    else{
+        updateCountDisplay();
+    }
+    }
+
+    function Clock(){
+        but=document.getElementById("time")
+        if(but.value==12){
+            but.value=24
+        }
+        else{
+            but.value=12
+        }
+    }
+
     function StartClock(){
         setInterval(doClockTick,1000);
     }
 
     function doClockTick(){
+        but=document.getElementById("time")
         var currentdate=new Date();
+        if(but.value=="12"){
         var hours= currentdate.getHours();
+        if(hours>12){
+            var hours=hours-12  
+        }    
+        }
+        else{
+        var hours= currentdate.getHours();
+        }
         var min= currentdate.getMinutes();
         var sec=currentdate.getSeconds();
         var timeString= hours+":"+min+":"+sec;
@@ -65,12 +208,20 @@
     }
 
     function OnLoad(){
-        document.getElementById("TV").style.visibility="hidden";
-        document.getElementById("tem").style.visibility="hidden";
+        document.getElementById("TV").style.visibility="hidden"; 
         document.getElementById("Open").style.visibility="hidden";
         document.getElementById("Search").style.visibility="hidden";
         document.getElementById("time").style.visibility="hidden";
         StartClock();
+        document.getElementById("d3").style.visibility="hidden";
+        document.getElementById("d5").style.visibility="hidden";
+        document.getElementById("d6").style.visibility="hidden";
+        document.getElementById("d8").style.visibility="hidden";
+        document.getElementById("d7").style.visibility="hidden";
+        document.getElementById("music").style.visibility="hidden";
+
+        count = Math.floor(Math.random() * 46) - 5;
+        updateCountDisplay();
     }
 
    function OnOFFSwitch(){
@@ -80,6 +231,14 @@
             document.getElementById('OF').style.backgroundColor="green";
             document.getElementById("TV").style.visibility="visible";
             document.getElementById("Open").style.visibility="visible";
+            document.getElementById("d5").style.visibility="visible";
+            document.getElementById("d3").style.visibility="visible";
+            document.getElementById("time").style.visibility="visible";
+            document.getElementById("d6").style.visibility="visible";
+            document.getElementById("d8").style.visibility="visible";
+            document.getElementById("d7").style.visibility="visible";
+            document.getElementById("music").style.visibility="visible";
+            document.getElementById("music").innerHTML='<audio autoplay controls loop><source src="Portal.mp3" type="audio/mpeg">';
         }
         else{
             but.value="Fridge-OFF";
@@ -87,6 +246,13 @@
             document.getElementById("TV").style.visibility="hidden";
             document.getElementById("Open").style.visibility="hidden";
             document.getElementById("Search").style.visibility="hidden";
+            document.getElementById("d5").style.visibility="hidden";
+            document.getElementById("d3").style.visibility="hidden";
+            document.getElementById("time").style.visibility="hidden";
+            document.getElementById("d6").style.visibility="hidden";
+            document.getElementById("d8").style.visibility="hidden";
+            document.getElementById("d7").style.visibility="hidden";
+            document.getElementById("music").innerHTML="";
 
             but=document.getElementById("TV")
             if(but.value=="TV-ON"){
@@ -102,24 +268,26 @@
     function TVSwitch(){
         but=document.getElementById("TV")
         var pic=document.getElementById('TVPic')
+        var audo;
         if(but.value=="TV-OFF"){
+            audo=new Audio('XP.mp3');
+            audo.play()
             but.value="TV-ON";
             document.getElementById('TV').style.backgroundColor="green";
             pic.src="https://tse4.mm.bing.net/th?id=OIP.jARQm7h7UnFVd2et06JADQHaFI&pid=Api&P=0"
             pic.style.height='500px';
             pic.style.width='500px';
 
-            document.getElementById("tem").style.visibility="visible";
             document.getElementById("Search").style.visibility="visible";
         }
         else{
             but.value="TV-OFF";
+            audo=new Audio('Error.mp3');
+            audo.play()
             document.getElementById('TV').style.backgroundColor="red";
             pic.src="https://images.philips.com/is/image/PhilipsConsumer/42PFL5432D_37-IMS-en_US?$jpglarge$&wid=960";
             pic.style.height='500px';
             pic.style.width='500px';
-
-            document.getElementById("tem").style.visibility="hidden";
             document.getElementById("Search").style.visibility="hidden";
             
         }
@@ -133,12 +301,7 @@
         pic.style.width='500px';
     }
 
-    function Temp(){
-        var pic=document.getElementById('TVPic')
-        pic.src="https://cdn3.vectorstock.com/i/1000x1000/49/77/cold-warm-thermometer-temperature-weather-vector-23814977.jpg"
-        pic.style.height='500px';
-        pic.style.width='500px';
-    }
+
 </script>
 
 <footer>
