@@ -1,0 +1,42 @@
+{
+    "Course1":{
+        "course_ID":"REST_392L_111_22F",
+        "Title":"Meaning, Pourpose, and Happiness",
+        "Semester":"Fall 2022",
+        "Professor":"Brian Loh",
+
+        "Book":{
+            "ISBN":"0-8129-7656-8",
+            "Title":"The Gospel of the Flying Spaghetti Monster",
+            "Author":"Bobby Henderson",
+            "course_ID":"REST_392L_111_22F"
+        }
+    },
+    "Course2":{
+        "course_ID":"English 120L",
+        "Title":"Writing for College",
+        "Semester":"Spring 2022",
+        "Professor":"Lance Turner",
+
+        "Book":{
+            "ISBN":"1476787840",
+            "Title":"The Old Man and the Sea",
+            "Author":"Ernest Hemingway",
+            "course_ID":"English 120L"
+        }
+    },
+    "Course3":{
+        "course_ID":"Math205L800",
+        "Title":"Discrete Mathematics",
+        "Semester":"Spring 2022",
+        "Professor":"Tracey McGrail",
+
+        "Book":{
+            "ISBN":"0486691152",
+            "Title":"Introductory Discrete Mathematics",
+            "Author":"V. K . Balakrishnan",
+            "course_ID":"Math205L800"
+        }
+    }
+    
+}
