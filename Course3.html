@@ -1,0 +1,68 @@
+
+<head>
+    <link rel="stylesheet" href="Crumb.css">
+    <style>
+        body{
+    background-color: black;
+
+  }
+    table {
+    border: 1px solid rgb(183, 70, 14);
+    margin: 0 auto;
+    font-size: 18px;
+  }
+  th, td {
+    border: 1px solid rgb(254, 254, 254);
+    padding: 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #f6c13af1;
+  }
+  td{
+    background-color:rgb(183, 70, 14);
+  }
+    </style>
+</head>
+<!-- style="height: 250;width: 250;"-->
+<nav class="crumbs">  
+    <ol>
+        <li class="crumb"><a href="FoxBooksHome.html"><img src="FBLogo.png" ></a></li>
+        <li class="crumb"><a href="courses.html"><img src="Class.png" ></a></li>
+        <li style="color: white;" class="crumb">Math205L800</li>
+    </ol>
+</nav>
+
+<h1 style="color: white;text-align: center;">Math205L800</h1>
+<body>
+    <body>
+      <table>
+        <thead>
+          <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Course ID</th>
+          </tr>
+        </thead>
+        <tbody id="book-data"></tbody>
+      </table>
+</body>
+<script>
+  fetch('https://danielbeaver1000100.github.io/SD330/foxbook.json')
+			.then(response => response.json())
+			.then(data => {
+				const course3 = data['Course3'];
+				const book = course3['Book'];
+				const bookData = `
+					<tr>
+						<td>${book['ISBN']}</td>
+						<td>${book['Title']}</td>
+						<td>${book['Author']}</td>
+						<td>${book['course_ID']}</td>
+					</tr>
+				`;
+				document.getElementById('book-data').innerHTML = bookData;
+			})
+			.catch(error => console.error(error));
+</script>
